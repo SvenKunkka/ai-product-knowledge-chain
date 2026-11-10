@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#14342f">
+  <title>产品知识链 · 本机演练</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/launch-ui.js" defer></script>
+  <script src="/feedback-ui.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">跳到主要内容</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="工作区导航">
+      <div class="brand">
+        <svg viewBox="0 0 40 40" aria-hidden="true" class="brand-mark">
+          <rect width="40" height="40" rx="10" fill="currentColor"/>
+          <path d="M13 13h14v14H13zM13 20h14M20 13v14" stroke="#e2f7e7" stroke-width="1.6" fill="none"/>
+          <circle cx="20" cy="20" r="3" fill="#e2f7e7"/>
+        </svg>
+        <div><span class="brand-name">产品知识链</span><span class="brand-context" id="brand-context">固件变更演练</span></div>
+      </div>
+      <div class="nav-label">工作区</div>
+      <nav class="navigation" aria-label="主要页面">
+        <a href="#product" data-route="product">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 5v15m3-10h6m-6 4h4"/></svg>产品档案
+        </a>
+        <a href="#workspace" data-route="workspace">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2L12 3zm6 12v5m-2.5-2.5h5"/></svg><span id="workspace-nav-label">AI 变更工作区</span>
+        </a>
+        <a href="#review" data-route="review">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5H5v15h14V5h-3"/><rect x="8" y="3" width="8" height="4" rx="1"/><path d="m8.5 13 2.3 2.3 4.7-4.7"/></svg>审核台
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="live-dot"></span><span>本机环境</span>
+        <span class="sidebar-caption" id="case-mode-label">本机资料 · 模拟渠道</span>
+      </div>
+    </aside>
+    <div class="main-shell">
+      <header class="topbar">
+        <div class="breadcrumb"><span>产品知识链</span><span aria-hidden="true">/</span><span id="route-label">产品档案</span></div>
+        <div class="toolbar-actions">
+          <a class="button button-secondary button-small" id="current-run" href="/#workspace" hidden>返回当前变更</a>
+          <button type="button" id="new-run" data-action="new_run" class="button button-secondary button-small" disabled>新建演练</button>
+          <button type="button" id="new-upload-run" class="button button-secondary button-small" disabled>
+            新建资料变更
+          </button>
+          <button type="button" id="new-launch-run" class="button button-primary button-small" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>新建新品项目
+          </button>
+          <button type="button" id="new-feedback-run" data-action="new_feedback_run" class="button button-primary button-small" disabled hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>新建售后反馈
+          </button>
+        </div>
+      </header>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <main class="page" id="main" tabindex="-1">
+        <p class="initial-state" role="status">正在读取演练资料…</p>
+      </main>
+    </div>
+  </div>
+  <dialog id="upload-dialog" class="upload-dialog" aria-labelledby="upload-dialog-title">
+    <form id="upload-case-form">
+      <h2 id="upload-dialog-title">新建资料变更</h2>
+      <p class="panel-note">先登记脱敏后的产品代号和固件范围，再上传四份材料。</p>
+      <div class="form-fields">
+        <label>脱敏产品名称<input name="productName" required maxlength="80" placeholder="例如：设备 A" autofocus></label>
+        <div class="form-versions">
+          <label>旧固件版本<input name="oldFirmware" required maxlength="48" placeholder="例如：1.0.0"></label>
+          <label>目标固件版本<input name="newFirmware" required maxlength="48" placeholder="例如：1.1.0"></label>
+        </div>
+      </div>
+      <p id="upload-dialog-error" class="form-error" role="alert" hidden></p>
+      <div class="actions">
+        <button type="submit" class="button button-primary">创建资料变更</button>
+        <button type="button" class="button button-secondary" id="close-upload-dialog">取消</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="launch-dialog" class="upload-dialog" aria-labelledby="launch-dialog-title">
+    <form id="launch-case-form">
+      <h2 id="launch-dialog-title">新建新品项目</h2>
+      <p class="panel-note">登记新品范围，接着上传决策纪要、PRD、规格书和验证依据。</p>
+      <div class="form-fields">
+        <label>脱敏产品名称<input name="productName" required maxlength="80" placeholder="键盘 N-01" autofocus></label>
+        <label>产品版本<input name="productVersion" required maxlength="48" placeholder="R1.0"></label>
+      </div>
+      <p id="launch-dialog-error" class="form-error" role="alert" hidden></p>
+      <div class="actions">
+        <button type="submit" class="button button-primary">创建新品项目</button>
+        <button type="button" class="button button-secondary" id="close-launch-dialog">取消</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
